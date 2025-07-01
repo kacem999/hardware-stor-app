@@ -21,8 +21,8 @@ const ProductsPage = () => {
                 setLoading(false);
             }
         };
-        fetchProducts();
-    }, []) // Empty dependency array means this effect runs once after the initial render
+        fetchProducts(); // Call the function to fetch products
+    }, []) // [] Empty dependency array means this effect runs once after the initial render
 
     // Conditional rendering based on state
     if (loading) {
