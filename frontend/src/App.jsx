@@ -4,8 +4,14 @@ import LoginPage from './pages/LoginPage'
 import ProductsPage from './pages/ProductsPage'
 import RegisterPage from './pages/RegisterPage'
 import { Route , Routes } from 'react-router-dom'
+import { useAuth } from './context/AuthContext';
 
 function App() {
+  const { loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <div>
       <Navbar/>
