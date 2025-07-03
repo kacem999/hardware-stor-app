@@ -7,6 +7,7 @@ import { Route , Routes } from 'react-router-dom'
 import { useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute'
 import DashboardPage from './pages/DashboardPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 
 function App() {
   const { loading } = useAuth();
@@ -21,6 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path='/products/:id' element={<ProductDetailPage />} />
+          {/* Public Routes */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           {/* Protected Routes */}

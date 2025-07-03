@@ -1,5 +1,7 @@
 import { useState , useEffect } from "react";
-import apiClient from "../api/axios"; 
+import apiClient from "../api/axios"; // Ensure this path is correct based on your project structure
+import { Link } from "react-router-dom";
+
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -39,13 +41,15 @@ const ProductsPage = () => {
             <div className="product-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {products.length > 0 ? (
                      products.map(product => (
-                        <div key={product.id} className="product-card" style={{ border: '1px solid #ccc', padding: '1rem' }}>
-                            <h3>{product.name}</h3>
-                            {/* This works because of our eager loading on the backend! */}
-                            <p><strong>Category:</strong> {product.category.name}</p>
-                            <p><strong>Price:</strong> ${product.price}</p>
-                            <p><strong>In Stock:</strong> {product.stock_quantity}</p>
-                        </div>
+                        <Link key={product.id} to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
+                            <div className="product-card" style={{ border: '1px solid #ccc', padding: '1rem' }}>
+                                <h3>{product.name}</h3>
+                                {/* This works because of our eager loading on the backend! */}
+                                <p><strong>Category:</strong> {product.category.name}</p>
+                                <p><strong>Price:</strong> ${product.price}</p>
+                                <p><strong>In Stock:</strong> {product.stock_quantity}</p>
+                            </div>
+                        </Link>
                     ))
                 ) : (
                     <p>No products found.</p>
