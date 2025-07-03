@@ -24,6 +24,7 @@ const Navbar = () => {
             <div style={linkContainerStyles}>
                 <Link to="/">Home</Link>
                 <Link to="/products">Products</Link>
+                {user && <Link to="/dashboard">Dashboard</Link>}
             </div>
             <div style={linkContainerStyles}>
                 {/* Render content conditionally */}
