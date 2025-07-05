@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../api/axios"; // Ensure this path is correct based on your project structure
-
+import { useCart } from "../context/CartContext";
 
 const ProductDetailPage = () => {
 
+    const { addToCart } = useCart();
     const { id } = useParams(); // Get product ID from URL
     const [product , setProduct] = useState(null);
     const [loading , setLoading] = useState(true);
@@ -36,7 +37,11 @@ const ProductDetailPage = () => {
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>
             <p>In Stock: {product.stock_quantity}</p>
-            <button>Add to Cart</button>
+            <button onClick={() => {
+                addToCart(product);
+                alert(`${product.name} has been added to your cart!`);
+            }}>
+                Add to Cart</button>
         </div>
     );
 };

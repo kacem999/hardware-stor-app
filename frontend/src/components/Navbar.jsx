@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useCart } from '../context/CartContext'; 
 
 const navStyles = {
     display: 'flex',
@@ -17,7 +18,10 @@ const linkContainerStyles = {
 
 const Navbar = () => {
     const { user, logout } = useAuth(); // Access user and logout function from AuthContext
+    const { cartItems } = useCart();
 
+    // best practice: Calculate total quantity, not just array length 
+    const totalItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
     return (
         <nav style={navStyles}>
@@ -28,6 +32,7 @@ const Navbar = () => {
             </div>
             <div style={linkContainerStyles}>
                 {/* Render content conditionally */}
+                <Link to="/cart">Cart ({totalItemsInCart})</Link>
                 {user ? (
                     <>
                         <span>Hello, {user.name}!</span>
