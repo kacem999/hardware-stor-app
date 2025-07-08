@@ -78,6 +78,51 @@ export const CartProvider = ({ children }) => {
             });
         }
     };
+
+    const removeFromCart = async (productId) => {
+        if(token){
+            setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+            
+            try {
+                await apiClient.delete(`/cart/${productId}`);
+            } catch (error) {
+                console.error('Error removing from cart:', error);
+                const response = await apiClient.get('/cart');
+                const formattedCart = response.data.map(item => ({ ...item.product, quantity: item.quantity}));
+                setCartItems(formattedCart);
+            }
+        } else {
+            setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+        }
+    };
+
+    const updateQuantity = async (productId, quantity) => {
+        const newQuantity = Math.max(1, quantity);
+        
+        if(token) {
+            setCartItems(prevItems => 
+                prevItems.map(item => 
+                    item.id === productId ? { ...item, quantity: newQuantity } : item
+                )
+            );
+            
+            try {
+                await apiClient.put(`/cart/${productId}`, { quantity: newQuantity });
+            } catch (error) {
+                console.error('Error updating quantity:', error);
+                // On error, refetch to restore correct state
+                const response = await apiClient.get('/cart');
+                const formattedCart = response.data.map(item => ({ ...item.product, quantity: item.quantity }));
+                setCartItems(formattedCart);
+            }
+        } else {
+            setCartItems(prevItems => 
+                prevItems.map(item => 
+                    item.id === productId ? { ...item, quantity: newQuantity } : item
+                )
+            );
+        }
+    };
     
     // This is needed for the logout process in AuthContext
     const clearCart = () => {
@@ -90,7 +135,7 @@ export const CartProvider = ({ children }) => {
     // So we just need to provide the main values.
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart , removeFromCart, updateQuantity }}>
             {children}
         </CartContext.Provider>
     );
