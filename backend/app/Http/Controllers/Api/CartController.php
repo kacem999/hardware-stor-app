@@ -8,6 +8,34 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+
+    public function merge(Request $request){
+        $request->validate([
+            'localCart' => 'sometimes|array',
+            'localCart.*.product_id' => 'required|exists:products,id',
+            'localCart.*.quantity' => 'required|integer|min:1',
+        ]);
+
+        $user = Auth::user();
+        $localCart = $request->input('localCart', []);
+
+        foreach ($localCart as $localItem) {
+            $cartItem = $user->cartItems()->where('product_id', $localItem['product_id'])->first();
+
+            if ($cartItem) {
+                // if item exists in DB, add quantities together 
+                $cartItem->increment('quantity', $localItem['quantity']);
+            } else {
+                // if not, create it
+                $user->cartItems()->create([
+                    'product_id' => $localItem['product_id'],
+                    'quantity' => $localItem['quantity'],
+                ]);
+            }
+        }
+
+        return $user->cartItems()->with('product')->get();
+    }
     public function index()
     {
         // Eager load the product details for each cart items
@@ -41,18 +69,18 @@ class CartController extends Controller
         return response()->json($cartItem->load('product'), 201);
     }
 
-    public function update($productId, Request $request)
+    public function update(Request $request, $productId)
     {
         $request->validate([
             'quantity' => 'required|integer|min:1'
         ]);
 
-        $cartItem = Auth::user()->cartItems()->where('product_id', $productId)->first();
+        $cartItem = Auth::user()->cartItems()->where('product_id', $productId)->firstOrFail();
         $cartItem->update([
             'quantity' => $request->quantity
         ]);
 
-        return response()->json($cartItem->load('product'), 200);
+        return response()->json($cartItem->load('product'));
     }
 
     public function destroy($productId)

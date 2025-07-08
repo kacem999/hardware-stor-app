@@ -22,6 +22,6 @@ class CartItem extends Model
 
     public function user(): BelongsTo
     {
-        return $this->betongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
