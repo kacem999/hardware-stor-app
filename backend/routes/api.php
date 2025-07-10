@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -25,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('cart/{productId}', [CartController::class, 'destroy']);
     Route::post('/cart/merge',[CartController::class, 'merge']);
 
+    Route::post('/orders', [OrderController::class, 'store']);
 });
