@@ -1,6 +1,6 @@
-import { useState , useEffect } from "react";
-import apiClient from "../api/axios"; // Ensure this path is correct based on your project structure
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import apiClient from "../api/axios";
+import ProductCard from "../components/ProductCard"; // 1. Import the new component
 
 const ProductsPage = () => {
     const [products, setProducts] = useState([]);
@@ -10,54 +10,37 @@ const ProductsPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                // Make the GET request using our apiClient
                 const response = await apiClient.get('/products');
-                // Update state with the fetched data
                 setProducts(response.data);
-            }catch (err){
-                // If an error occurs, update the error state 
-               setError("Failed to fetch products. Please try again later.");
-               console.error(err);
-            }finally{
-                // Set loading to false after the request completes 
+            } catch (err) {
+                setError("Failed to fetch products. Please try again later.");
+                console.error(err);
+            } finally {
                 setLoading(false);
             }
         };
-        fetchProducts(); // Call the function to fetch products
-    }, []) // [] Empty dependency array means this effect runs once after the initial render
+        fetchProducts();
+    }, []);
 
-    // Conditional rendering based on state
-    if (loading) {
-        return <div>Loading products...</div>;
-    }
-
-    if (error) {
-        return <div style={{ color: 'red' }}>{error}</div>;
-    }
+    if (loading) return <div className="text-center p-8">Loading products...</div>;
+    if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
     return (
-        <div>
-            <h2> Products </h2>
-            <div className="product-list" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {products.length > 0 ? (
-                     products.map(product => (
-                        <Link key={product.id} to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }} >
-                            <div className="product-card" style={{ border: '1px solid #ccc', padding: '1rem' }}>
-                                <h3>{product.name}</h3>
-                                {/* This works because of our eager loading on the backend! */}
-                                <p><strong>Category:</strong> {product.category.name}</p>
-                                <p><strong>Price:</strong> ${product.price}</p>
-                                <p><strong>In Stock:</strong> {product.stock_quantity}</p>
-                            </div>
-                        </Link>
-                    ))
-                ) : (
-                    <p>No products found.</p>
-                )}
+        <div className="bg-slate-50">
+            {/* 2. Add a main container with responsive padding and centering */}
+            <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">All Products</h2>
+
+                {/* 3. Use CSS Grid for a responsive layout */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {products.map(product => (
+                        // 4. Use the new ProductCard component
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
             </div>
         </div>
     );
-
 };
 
 export default ProductsPage;
