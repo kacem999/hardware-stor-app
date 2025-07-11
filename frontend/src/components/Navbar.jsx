@@ -2,21 +2,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext'; 
 
-
-const navStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '1rem',
-    backgroundColor: '#f0f0f0',
-    borderBottom: '1px solid #ccc',
-};
-
-const linkContainerStyles = {
-    display : 'flex',
-    gap: '1rem',
-}
-
 const Navbar = () => {
     const { user, logout } = useAuth(); // Access user and logout function from AuthContext
     const { cartItems } = useCart();
@@ -43,7 +28,7 @@ const Navbar = () => {
                         {user ? (
                             <>
                                 <span className="text-gray-700">Hello, {user.name}</span>
-                                <button onClick={logout} className="text-gray-500 hover:text-blue-600">Logout</button>
+                                <button onClick={logout} className="text-gray-500 hover:text-red-600">Logout</button>
                             </>
                         ) : (
                             <>
