@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/axios';
 
-
 const RegisterPage = () => {
     const navigate = useNavigate();
     const [formData , setFormData] = useState({
@@ -67,42 +66,73 @@ const RegisterPage = () => {
         }
     };
 
-
-
-
-    
-
     return (
-        <div>
-            <h2>Register for an Account</h2>
-            <form noValidate onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required />
-
-                    {/* Display validation error if it exists  */}
-                    {errors.name && <p style={{ color: 'red' }}>{errors.name[0]}</p>}
-                </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
-                    {/* Display validation error if it exists  */}
-                    {errors.email && <p style={{ color: 'red' }}>{errors.email[0]}</p>}
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
-                    {/* Display validation error if it exists  */}
-                    {errors.password && <p style={{ color: 'red' }}>{errors.password[0]}</p>}
-                </div>
-                <div>
-                    <label htmlFor="password_confirmation">Confirm Password:</label>
-                    <input type="password" id="password_confirmation" name="password_confirmation" value={formData.password_confirmation} onChange={handleChange} required />
-                    {/* Display validation error if it exists  */}
-                    {errors.password_confirmation && <p style={{ color: 'red' }}>{errors.password_confirmation[0]}</p>}
-                </div>
-                <button type="submit">Register</button>
-            </form>
+        <div className="min-h-screen flex items-center justify-center bg-slate-100">
+            <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Register for an Account</h2>
+                
+                <form noValidate onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name[0]}</p>}
+                    </div>
+                    
+                    <div className="mb-4">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email[0]}</p>}
+                    </div>
+                    
+                    <div className="mb-4">
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password[0]}</p>}
+                    </div>
+                    
+                    <div className="mb-6">
+                        <label htmlFor="password_confirmation" className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="password_confirmation"
+                            name="password_confirmation"
+                            value={formData.password_confirmation}
+                            onChange={handleChange}
+                            required
+                            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        {errors.password_confirmation && <p className="text-red-500 text-sm mt-1">{errors.password_confirmation[0]}</p>}
+                    </div>
+                    
+                    <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Register
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

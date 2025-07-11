@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext'; 
 
+
 const navStyles = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -24,26 +25,34 @@ const Navbar = () => {
     const totalItemsInCart = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
     return (
-        <nav style={navStyles}>
-            <div style={linkContainerStyles}>
-                <Link to="/">Home</Link>
-                <Link to="/products">Products</Link>
-                {user && <Link to="/dashboard">Dashboard</Link>}
-            </div>
-            <div style={linkContainerStyles}>
-                {/* Render content conditionally */}
-                <Link to="/cart">Cart ({totalItemsInCart})</Link>
-                {user ? (
-                    <>
-                        <span>Hello, {user.name}!</span>
-                        <button onClick={logout}>Logout</button>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </>
-                )}
+        <nav className="bg-white shadow-md">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16">
+                    {/* Left side links */}
+                    <div className="flex items-center space-x-4">
+                        <Link to="/" className="text-gray-700 hover:text-blue-600 font-bold">HardwareStore</Link>
+                        <Link to="/products" className="text-gray-500 hover:text-blue-600">Products</Link>
+                        {user && <Link to="/dashboard" className="text-gray-500 hover:text-blue-600">Dashboard</Link>}
+                    </div>
+
+                    {/* Right side links */}
+                    <div className="flex items-center space-x-4">
+                        <Link to="/cart" className="text-gray-500 hover:text-blue-600">
+                            Cart ({totalItemsInCart})
+                        </Link>
+                        {user ? (
+                            <>
+                                <span className="text-gray-700">Hello, {user.name}</span>
+                                <button onClick={logout} className="text-gray-500 hover:text-blue-600">Logout</button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className="text-gray-500 hover:text-blue-600">Login</Link>
+                                <Link to="/register" className="text-gray-500 hover:text-blue-600">Register</Link>
+                            </>
+                        )}
+                    </div>
+                </div>
             </div>
         </nav>
     );
