@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -38,7 +39,16 @@ class OrderController extends Controller
                 'postal_code' => $request->postal_code,
             ]);
 
-            // 3. Clear the user cart 
+            // 3. Create order items
+            foreach ($cartItems as $cartItem) {
+                $order->items()->create([
+                    'product_id' => $cartItem->product_id,
+                    'quantity' => $cartItem->quantity,
+                    'price' => $cartItem->product->price,
+                ]);
+            }
+
+            // 4. Clear the user cart
             $user->cartItems()->delete();
 
             return $order;
@@ -46,4 +56,10 @@ class OrderController extends Controller
 
         return response()->json($order->load('items.product'), 201 );
     }
+
+    //     public function index()
+    // {
+    //     $orders = Auth::user()->orders()->with('orderItems.product')->latest()->get();
+    //     return response()->json($orders);
+    // }
 }

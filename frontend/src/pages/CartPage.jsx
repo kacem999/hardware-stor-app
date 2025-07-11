@@ -1,5 +1,6 @@
 // In frontend/src/pages/CartPage.jsx
 import { useCart } from '../context/CartContext';
+import { Link } from 'react-router-dom';
 
 const CartPage = () => {
     // Get the new functions from the context
@@ -38,6 +39,13 @@ const CartPage = () => {
                         </div>
                     ))}
                     <h3 style={{ marginTop: '1rem', textAlign: 'right' }}>Total: ${totalPrice.toFixed(2)}</h3>
+                    {cartItems.length > 0 && (
+                        <div style={{ textAlign: 'right', marginTop: '1rem' }}>
+                            <Link to="/checkout">
+                                <button>Proceed to Checkout</button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
