@@ -29,3 +29,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
 });
+
+Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/test', function () {
+        return response()->json(['message' => 'Welcome, Admin!']);
+    });
+});
