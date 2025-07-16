@@ -1,42 +1,57 @@
-import { useState, useEffect } from 'react'; // Remove 'use' - it's not needed
+import { useState, useEffect } from 'react';
 import apiClient from '../../api/axios';
+import Modal from '../../components/Modal'; // Import Modal
+import AddProductForm from '../../components/admin/AddProductForm'; // Import Form
+
 
 const ManageProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const fetchProducts = async () => {
+        setLoading(true);
+        try {
+            const response = await apiClient.get('/products');
+            console.log('Products response:', response.data);
+            setProducts(response.data);
+        } catch (err) {
+            setError('Failed to fetch products');
+            console.error('Error fetching products:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await apiClient.get('/products');
-                console.log('Products response:', response.data); // Add logging
-                setProducts(response.data);
-            } catch (err) {
-                setError('Failed to fetch products');
-                console.error('Error fetching products:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts();
+        fetchProducts(); // Initial fetch
     }, []);
+
+    const handleProductAdded = () => {
+        setIsModalOpen(false); 
+        fetchProducts();
+    }
 
     if (loading) return <div className="text-center p-8">Loading products...</div>;
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
     return (
-        <div className="p-6">
+        <div>
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">Manage Products</h1>
-                <button className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+                <button onClick={() => setIsModalOpen(true)} className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
                     Add New Product
                 </button>
             </div>
 
-            {products.length === 0 ? (
-                <div className="text-center p-8 text-gray-500">No products found</div>
-            ) : (
+            {/* The Modal for adding a new product */}
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Add New Product">
+                <AddProductForm onSuccess={handleProductAdded} />
+            </Modal>
+
+            {/* The rest of the page with the table */}
+            {loading ? <p>Loading...</p> : (
                 <div className="bg-white shadow-md rounded-lg overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50">
