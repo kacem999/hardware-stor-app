@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+
     public function index()
     {
         return Product::with('category')->get();
@@ -32,8 +33,8 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
-            'description' => $request->price,
-            'stock_quantity' => $request->stok_quantity,
+            'description' => $request->description,
+            'stock_quantity' => $request->stock_quantity,
             'price' => $request->price,
             'category_id' => $request->category_id,
         ]);
@@ -55,7 +56,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'description' => $request->description,
-            'stock_quantity' => $request->stok_quantity,
+            'stock_quantity' => $request->stock_quantity,
             'price' => $request->price,
             'category_id' => $request->category_id,
         ]);

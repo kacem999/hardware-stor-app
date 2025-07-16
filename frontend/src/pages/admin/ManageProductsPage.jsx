@@ -33,6 +33,21 @@ const ManageProductsPage = () => {
         fetchProducts();
     }
 
+    const handleDeleteProduct = async (productId) => {
+        if (!window.confirm('Are you sure you want to delete this product ?')) {
+            return ;
+        }
+
+        try {
+            await apiClient.delete( `/products/${productId}`);
+            alert('Product deleted successfully');
+            fetchProducts(); // Refresh the product list
+        } catch (error) {
+            console.error('Failed to delete product:', error);
+            alert('An error occurred while deleting the product');
+        }
+    }
+
     if (loading) return <div className="text-center p-8">Loading products...</div>;
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
 
@@ -74,7 +89,7 @@ const ManageProductsPage = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.stock_quantity}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <button className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                                        <button className="text-red-600 hover:text-red-900">Delete</button>
+                                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}
