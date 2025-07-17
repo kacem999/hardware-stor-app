@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import apiClient from '../../api/axios';
 import Modal from '../../components/Modal'; // Import Modal
 import AddProductForm from '../../components/admin/AddProductForm'; // Import Form
-
+import EditProductForm from '../../components/admin/EditProductForm'; // Import Edit Form
 
 const ManageProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // State for the Edit modal
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -28,8 +32,19 @@ const ManageProductsPage = () => {
         fetchProducts(); // Initial fetch
     }, []);
 
+    const handleOpenEditModal = (product) => {
+        setEditingProduct(product);
+        setIsEditModalOpen(true);
+    };
+
     const handleProductAdded = () => {
         setIsModalOpen(false); 
+        fetchProducts();
+    }
+
+    const handleProductUpdated = () => {
+        setIsEditModalOpen(false);
+        setEditingProduct(null);
         fetchProducts();
     }
 
@@ -65,6 +80,14 @@ const ManageProductsPage = () => {
                 <AddProductForm onSuccess={handleProductAdded} />
             </Modal>
 
+            {/* The Modal for Editing a product */}
+            {editingProduct && (
+                <Modal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Edit Product">
+                    <EditProductForm product={editingProduct} onSuccess={handleProductUpdated} />
+                </Modal>
+            )}
+
+
             {/* The rest of the page with the table */}
             {loading ? <p>Loading...</p> : (
                 <div className="bg-white shadow-md rounded-lg overflow-hidden">
@@ -88,8 +111,9 @@ const ManageProductsPage = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.stock_quantity}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
-                                        <button className="text-red-600 hover:text-red-900" onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                                        {/* 5. Hook up the Edit button */}
+                                        <button onClick={() => handleOpenEditModal(product)} className="text-indigo-600 hover:text-indigo-900 mr-4">Edit</button>
+                                        <button onClick={() => handleDeleteProduct(product.id)} className="text-red-600 hover:text-red-900">Delete</button>
                                     </td>
                                 </tr>
                             ))}

@@ -12,7 +12,7 @@ class Product extends Model
         'slug',
         'description',
         'price',
-        'stok_quantity',
+        'stock_quantity',
         'image_url',
         'category_id',
     ];
