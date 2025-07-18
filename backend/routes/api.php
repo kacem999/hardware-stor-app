@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
@@ -13,6 +14,9 @@ Route::post('/login',[AuthController::class, 'login']);
 Route::apiResource('categories',CategoryController::class);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+
+Route::get('/auth/google/redirect', [SocialiteController::class, 'redirectToGoogle']);
+Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/products', [ProductController::class, 'store']);
