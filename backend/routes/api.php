@@ -15,8 +15,11 @@ Route::apiResource('categories',CategoryController::class);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
 
-Route::get('/auth/google/redirect', [SocialiteController::class, 'redirectToGoogle']);
-Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
+// Apply web middleware to Google OAuth routes to enable session support
+Route::middleware(['web'])->group(function () {
+    Route::get('/auth/google/redirect', [SocialiteController::class, 'redirectToGoogle']);
+    Route::get('/auth/google/callback', [SocialiteController::class, 'handleGoogleCallback']);
+});
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/products', [ProductController::class, 'store']);

@@ -14,12 +14,14 @@ import AdminLayout from './components/admin/AdminLayout';
 import AdminRoute from './components/admin/AdminRoute';
 import ManageProductsPage from './pages/admin/ManageProductsPage';
 import PublicLayout from './components/PublicLayout';
+import AuthCallbackPage from './pages/AuthCallbackPage';
 
 function App() {
   return (
     <Routes>
       {/* PUBLIC ROUTES */}
       <Route element={<PublicLayout />}>
+        <Route path="/auth/callback" element={<AuthCallbackPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/products/:id" element={<ProductDetailPage />} />

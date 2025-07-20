@@ -51,9 +51,15 @@ export const AuthProvider = ({ children }) => {
         navigate('/login');
     };
 
+    const loginWithToken = (token) => {
+        localStorage.setItem('token', token);
+        setToken(token);
+    // The useEffect will automatically fetch the user data
+    };
+
     return (
         // 3. Provide the loading state
-        <AuthContext.Provider value={{ user, token, loading, login, logout }}>
+        <AuthContext.Provider value={{ user, token, loading, login, logout, loginWithToken }}>
             {children}
         </AuthContext.Provider>
     );
