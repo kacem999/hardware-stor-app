@@ -83,7 +83,6 @@ const LoginPage = () => {
                         href="http://127.0.0.1:8000/api/auth/google/redirect" 
                         className="w-full flex items-center justify-center bg-white border border-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
-                        {/* You can add a Google icon SVG here for better styling */}
                         <FcGoogle size={24} />
                         <span className="ml-2">Sign in with Google</span>
                     </a>

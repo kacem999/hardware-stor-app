@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Models\Order;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
@@ -57,9 +58,9 @@ class OrderController extends Controller
         return response()->json($order->load('items.product'), 201 );
     }
 
-    //     public function index()
-    // {
-    //     $orders = Auth::user()->orders()->with('orderItems.product')->latest()->get();
-    //     return response()->json($orders);
-    // }
+    public function index(){
+
+        $orders = Order::with(['user','items.product'])->latest()->get();
+        return response()->json($orders);
+    }
 }

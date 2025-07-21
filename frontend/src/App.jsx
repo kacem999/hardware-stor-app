@@ -15,6 +15,9 @@ import AdminRoute from './components/admin/AdminRoute';
 import ManageProductsPage from './pages/admin/ManageProductsPage';
 import PublicLayout from './components/PublicLayout';
 import AuthCallbackPage from './pages/AuthCallbackPage';
+import ManageOrdersPage from './pages/admin/ManageOrdersPage';
+
+
 
 function App() {
   return (
@@ -38,7 +41,7 @@ function App() {
         <Route element={<AdminLayout />}>
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="products" element={<ManageProductsPage />} />
-          {/* <Route path="orders" element={<ManageOrdersPage />} /> */}
+          <Route path="orders" element={<ManageOrdersPage />} />
         </Route>
       </Route>
 
