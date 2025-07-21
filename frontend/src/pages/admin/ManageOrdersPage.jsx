@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../api/axios";
+import Modal from "../../components/Modal"; 
 
 
 const ManageOrdersPage = () => {
@@ -7,6 +8,10 @@ const ManageOrdersPage = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectOrder, setSelectedOrder] = useState(null);
+
 
 
     useEffect(() => {
@@ -23,6 +28,11 @@ const ManageOrdersPage = () => {
         };
         fetchOrders();
     }, []);
+
+    const handleViewDetails = (order) => {
+        setSelectedOrder(order);
+        setIsModalOpen(true);
+    }
 
     if (loading) return <div className="text-center p-8">Loading orders...</div>;
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
@@ -57,13 +67,44 @@ const ManageOrdersPage = () => {
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(order.created_at).toLocaleDateString()}</td>
                                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button className="text-indigo-600 hover:text-indigo-900">View Details</button>
+                                    <button 
+                                        onClick={() => handleViewDetails(order)} 
+                                        className="text-indigo-600 hover:text-indigo-900"
+                                    >
+                                        View Details
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            {/* Order Details Modal */}
+            {selectOrder && (
+                <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={`Order #${selectOrder.id} Details`}>
+                    <div className="text-sm">
+                        <p><strong>Customer:</strong> {selectOrder.user.name}</p>
+                        <p><strong>Status:</strong> <span className="font-semibold uppercase">{selectOrder.status}</span></p>
+                        <p><strong>Total:</strong> ${selectOrder.total_amount}</p>
+                        <div className="mt-4">
+                            <h4 className="font-semibold">Shipping Address:</h4>
+                            <p>{selectOrder.shipping_address_line_1}</p>
+                            <p>{selectOrder.city}, {selectOrder.postal_code}</p>
+                        </div>
+                        <div className="mt-4">
+                            <h4 className="font-semibold">Items Ordered:</h4>
+                            <ul className="list-disc list-inside mt-2 space-y-1">
+                                {selectOrder.items.map(item => (
+                                    <li key={item.id}>
+                                        {item.product.name} - {item.quantity} x ${item.price}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </Modal>
+            )}
         </div>
     );
 };

@@ -63,4 +63,8 @@ class OrderController extends Controller
         $orders = Order::with(['user','items.product'])->latest()->get();
         return response()->json($orders);
     }
+
+    public function show(Order $order) {
+        return $order->load(['user', 'items.product']);
+    }
 }
