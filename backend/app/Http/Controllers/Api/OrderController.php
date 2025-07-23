@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class OrderController extends Controller
 {
@@ -66,5 +67,17 @@ class OrderController extends Controller
 
     public function show(Order $order) {
         return $order->load(['user', 'items.product']);
+    }
+
+    public function update(Request $request , Order $order) {
+        $request->validate([
+            'status' => ['required', Rule::in(['pending', 'processing','shipped', 'delivered', 'cancelled'])],
+
+        ]);
+
+        $order->update(['status' => $request->status]);
+
+        return response()->json($order->load(['user', 'items.product']));
+
     }
 }
