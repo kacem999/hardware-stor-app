@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::delete('/products/{product}', [ProductController::class, 'destroy']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
     Route::put('/orders/{order}', [OrderController::class, 'update']);
+    Route::post('/products/{product}/upload-image', [ProductController::class, 'uploadImage']);
 });
 
 

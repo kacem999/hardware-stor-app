@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -68,5 +69,22 @@ class ProductController extends Controller
     {
         $product->delete();
         return response()->json(null, 204);
+    }
+
+    public function uploadImage(Request $request, Product $product) {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $path = $request->file('image')->store('products', 'public');
+
+        $url = Storage::url($path);
+
+        $product->update(['image' => $url]);
+
+        return response()->json([
+            'message' => 'Image uploaded successfully',
+            'image_url' => $url
+        ]);
     }
 }
