@@ -6,6 +6,19 @@ const CartPage = () => {
     // Get the new functions from the context
     const { cartItems, removeFromCart, updateQuantity } = useCart();
 
+    // Helper function to get the image URL for a product
+    const getImageUrl = (item) => {
+        if (!item.image) return 'https://placehold.co/100x100';
+        
+        if (item.image.startsWith('http')) {
+            return item.image;
+        } else if (item.image.startsWith('/storage')) {
+            return `http://127.0.0.1:8000${item.image}`;
+        } else {
+            return `http://127.0.0.1:8000/storage/${item.image}`;
+        }
+    };
+
     const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     return (
@@ -27,7 +40,15 @@ const CartPage = () => {
                             {cartItems.map(item => (
                                 <div key={item.id} className="p-4 flex items-center justify-between">
                                     <div className="flex items-center space-x-4">
-                                        <div className="w-16 h-16 bg-gray-200 rounded-md"></div> {/* Image Placeholder */}
+                                        <div className="w-16 h-16 rounded-md overflow-hidden flex items-center justify-center bg-gray-100">
+                                            {/* Display product image with fallback */}
+                                            <img 
+                                                src={getImageUrl(item)} 
+                                                alt={item.name} 
+                                                className="object-cover w-full h-full"
+                                                onError={(e) => {e.target.src = 'https://placehold.co/100x100'}}
+                                            />
+                                        </div>
                                         <div>
                                             <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
                                             <p className="text-sm text-gray-500">${item.price}</p>

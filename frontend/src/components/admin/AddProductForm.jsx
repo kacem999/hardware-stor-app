@@ -12,6 +12,7 @@ const AddProductForm = ({ onSuccess }) => {
         stock_quantity: '',
         category_id: '',
     });
+    const [imageFile, setImageFile] = useState(null);
 
     const [errors, setErrors] = useState({});
 
@@ -22,15 +23,30 @@ const AddProductForm = ({ onSuccess }) => {
     }, []);
 
     const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleFileChange = (e) => {
+        setImageFile(e.target.files[0]);
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
         try {
-            await apiClient.post('/products', formData);
+            const productResponse = await apiClient.post('/products', formData);
+            const newProduct = productResponse.data;
+
+            if (imageFile) {
+                const imageFormData = new FormData();
+                imageFormData.append('image', imageFile);
+                await apiClient.post(`/products/${newProduct.id}/upload-image`, imageFormData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+            }
             alert ('Product added successfully!');
             onSuccess(); // Call the success callback passed via props
 
@@ -124,6 +140,12 @@ const AddProductForm = ({ onSuccess }) => {
                         ))}
                     </select>
                     {errors.category_id && <p className="text-red-500 text-xs mt-1">{errors.category_id[0]}</p>}
+                </div>
+                {/* Image File Input */}
+                <div>
+                    <label htmlFor="image" className="block text-sm font-medium text-gray-700">Product Image</label>
+                    <input type="file" name="image" id="image" onChange={handleFileChange} className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"/>
+                    {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image[0]}</p>}
                 </div>
 
                 <div className="flex justify-end">
