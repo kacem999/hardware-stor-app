@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\SocialiteController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -45,6 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Route::get('/orders', [OrderController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'store']);
+
+    Route::get('/user/orders', [ProfileController::class, 'myOrders']);
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->prefix('admin')->group(function () {
