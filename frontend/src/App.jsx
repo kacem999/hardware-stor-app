@@ -5,6 +5,8 @@ import ProductsPage from './pages/ProductsPage';
 import RegisterPage from './pages/RegisterPage';
 import { Route , Routes } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import DashboardPage from './pages/DashboardPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
@@ -20,6 +22,14 @@ import ManageOrdersPage from './pages/admin/ManageOrdersPage';
 
 
 function App() {
+  const { i18n } = useTranslation();
+  
+  // Handle RTL/LTR direction based on language
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+
   return (
     <Routes>
       {/* PUBLIC ROUTES */}

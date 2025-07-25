@@ -1,0 +1,28 @@
+{
+  "welcomeMessage": "مرحبا بكم في متجر الأجهزة!",
+  "tagline": "أفضل مكان للعثور على جميع احتياجاتك من الأجهزة",
+  "navigation": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "categories": "الفئات",
+    "cart": "سلة التسوق",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "logout": "تسجيل الخروج",
+    "dashboard": "لوحة التحكم"
+  },
+  "product": {
+    "addToCart": "أضف إلى السلة",
+    "inStock_one": "{{count}} قطعة في المخزون",
+    "inStock_other": "{{count}} قطع في المخزون",
+    "inStock_many": "{{count}} قطعة في المخزون",
+    "price": "السعر",
+    "category": "الفئة"
+  },
+  "cart": {
+    "empty": "سلة التسوق فارغة",
+    "continueShopping": "مواصلة التسوق",
+    "total": "المجموع",
+    "checkout": "إتمام الشراء"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "welcomeMessage": "Welcome to the Hardware Store!",
+  "tagline": "This is the best place to find all your hardware needs",
+  "navigation": {
+    "home": "Home",
+    "products": "Products",
+    "categories": "Categories",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "dashboard": "Dashboard"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "inStock_one": "{{count}} item in stock",
+    "inStock_other": "{{count}} items in stock",
+    "price": "Price",
+    "category": "Category"
+  },
+  "cart": {
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "total": "Total",
+    "checkout": "Checkout"
+  }
+}

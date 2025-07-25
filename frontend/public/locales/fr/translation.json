@@ -1,0 +1,27 @@
+{
+  "welcomeMessage": "Bienvenue à la Quincaillerie !",
+  "tagline": "Le meilleur endroit pour trouver tous vos besoins en matériel",
+  "navigation": {
+    "home": "Accueil",
+    "products": "Produits",
+    "categories": "Catégories",
+    "cart": "Panier",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "logout": "Déconnexion",
+    "dashboard": "Tableau de bord"
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "inStock_one": "{{count}} article en stock",
+    "inStock_other": "{{count}} articles en stock",
+    "price": "Prix",
+    "category": "Catégorie"
+  },
+  "cart": {
+    "empty": "Votre panier est vide",
+    "continueShopping": "Continuer vos achats",
+    "total": "Total",
+    "checkout": "Passer à la caisse"
+  }
+}
