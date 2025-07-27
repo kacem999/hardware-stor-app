@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import apiClient from "../api/axios"; // Ensure this path is correct based on your project structure
 import { useCart } from "../context/CartContext";
+import Currency from "../components/Currency"; // Import Currency component for price formatting
 
 const ProductDetailPage = () => {
 
@@ -67,7 +68,9 @@ const ProductDetailPage = () => {
                         <h1 className="text-4xl font-extrabold text-gray-900 mt-2">
                             {product.name}
                         </h1>
-                        <p className="text-3xl text-gray-900 mt-4">${product.price}</p>
+                        <p className="text-3xl text-gray-900 mt-4">
+                            <Currency value={product.price} />
+                        </p>
                         
                         <div className="mt-6">
                             <h3 className="text-lg font-medium text-gray-900">Description</h3>

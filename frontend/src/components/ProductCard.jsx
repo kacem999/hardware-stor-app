@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Currency from './Currency'; // Import Currency component for price formatting
 
 const ProductCard = ({ product }) => {
     // Handle image URL construction more robustly
@@ -38,7 +39,9 @@ const ProductCard = ({ product }) => {
                     </h3>
                     <p className="text-sm text-gray-500 mb-2">{product.category.name}</p>
                     <div className="flex items-center justify-between">
-                        <p className="text-xl font-bold text-gray-900">${product.price}</p>
+                        <p className="text-xl font-bold text-gray-900">
+                            <Currency value={product.price} />
+                        </p>
                         <p className="text-sm text-gray-600">In Stock: {product.stock_quantity}</p>
                     </div>
                 </div>

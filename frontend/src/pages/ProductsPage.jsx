@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import apiClient from "../api/axios";
+import Currency from "../components/Currency";
 import ProductCard from "../components/ProductCard"; // 1. Import the new component
 
 const ProductsPage = () => {

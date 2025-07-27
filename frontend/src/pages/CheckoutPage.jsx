@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/axios';
+import Currency from '../components/Currency'; // Import Currency component for price formatting
 
 const CheckoutPage = () => {
     const { cartItems, clearCart } = useCart();
@@ -76,14 +77,14 @@ const CheckoutPage = () => {
                             {cartItems.map(item => (
                                 <div key={item.id} className="flex justify-between text-sm">
                                     <span className="text-gray-600">{item.name} x {item.quantity}</span>
-                                    <span className="font-medium text-gray-800">${(item.price * item.quantity).toFixed(2)}</span>
+                                    <span className="font-medium text-gray-800"> <Currency value={item.price * item.quantity} /></span>
                                 </div>
                             ))}
                         </div>
                         <div className="border-t my-4"></div>
                         <div className="flex justify-between text-lg font-bold">
                             <span className="text-gray-900">Total</span>
-                            <span className="text-gray-900">${totalPrice.toFixed(2)}</span>
+                            <span className="text-gray-900"><Currency value={totalPrice} /></span>
                         </div>
                         {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
                         <button 

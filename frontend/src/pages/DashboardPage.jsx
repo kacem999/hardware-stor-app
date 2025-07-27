@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import apiClient from "../api/axios"; // Ensure this path is correct based on your project
+import Currency  from "../components/Currency";
 
 const DashboardPage = () => {
 
@@ -53,7 +54,7 @@ const DashboardPage = () => {
                                             </p>
                                         </div>
                                         <div className="text-right">
-                                            <p className="font-semibold">${order.total_amount}</p>
+                                            <p className="font-semibold"><Currency value={order.total_amount} /></p>
                                             <p className="text-sm text-gray-500 capitalize">{order.status}</p>
                                         </div>
                                     </div>

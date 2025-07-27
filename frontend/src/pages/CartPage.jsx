@@ -1,6 +1,7 @@
 // In frontend/src/pages/CartPage.jsx
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import Currency from '../components/Currency';
 
 const CartPage = () => {
     // Get the new functions from the context
@@ -51,7 +52,7 @@ const CartPage = () => {
                                         </div>
                                         <div>
                                             <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
-                                            <p className="text-sm text-gray-500">${item.price}</p>
+                                            <p className="text-sm text-gray-500"><Currency amount={item.price} /></p>
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-4">
@@ -67,7 +68,7 @@ const CartPage = () => {
                                             />
                                         </div>
                                         <p className="w-24 text-right font-semibold text-gray-800">
-                                            ${(item.price * item.quantity).toFixed(2)}
+                                            <Currency value={item.price * item.quantity} />
                                         </p>
                                         <button onClick={() => removeFromCart(item.id)} className="text-red-500 hover:text-red-700 font-medium">
                                             Remove
@@ -81,7 +82,9 @@ const CartPage = () => {
                         <div className="p-4 bg-gray-50 rounded-b-lg border-t">
                             <div className="flex justify-end items-center space-x-4">
                                 <span className="text-xl font-medium text-gray-800">Total:</span>
-                                <span className="text-2xl font-bold text-gray-900">${totalPrice.toFixed(2)}</span>
+                                <span className="text-2xl font-bold text-gray-900">
+                                    <Currency value={totalPrice} />
+                                </span>
                             </div>
                             <div className="flex justify-end mt-4">
                                 <Link to="/checkout" className="w-full sm:w-auto bg-blue-600 text-white py-2 px-6 rounded-md text-center hover:bg-blue-700">
