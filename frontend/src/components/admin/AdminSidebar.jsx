@@ -22,6 +22,9 @@ const AdminSidebar = () => {
                 <NavLink to="/admin/orders" className={({ isActive }) => `${isActive ? activeLink : normalLink} block py-2 px-4 transition duration-200`}>
                     Manage Orders
                 </NavLink>
+                <NavLink to="/admin/categories" className={({ isActive }) => `${isActive ? activeLink : normalLink} block py-2 px-4 transition duration-200`}>
+                    Manage Categories
+                </NavLink>
             </nav>
         </aside>
     );

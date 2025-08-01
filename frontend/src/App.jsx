@@ -18,6 +18,7 @@ import ManageProductsPage from './pages/admin/ManageProductsPage';
 import PublicLayout from './components/PublicLayout';
 import AuthCallbackPage from './pages/AuthCallbackPage';
 import ManageOrdersPage from './pages/admin/ManageOrdersPage';
+import ManageCategoriesPage from './pages/admin/ManageCategoriesPage';
 
 
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="dashboard" element={<AdminDashboardPage />} />
           <Route path="products" element={<ManageProductsPage />} />
           <Route path="orders" element={<ManageOrdersPage />} />
+          <Route path="categories" element={<ManageCategoriesPage />} />
         </Route>
       </Route>
 
