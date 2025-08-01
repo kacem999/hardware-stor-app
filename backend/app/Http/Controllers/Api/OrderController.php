@@ -13,9 +13,11 @@ class OrderController extends Controller
 {
     public function store(Request $request){
         $request->validate([
-            'shipping_address_line_1' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'postal_code' => 'required|string|max:255',
+            'customer_name' => 'required|string|max:255',
+            'customer_phone' => 'required|string|max:20',
+            'wilaya' => 'required|string|max:255',
+            'commune' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
         ]);
 
         $user = Auth::user();
@@ -35,10 +37,13 @@ class OrderController extends Controller
             // 2.create the order 
             $order = $user->orders()->create([
                 'total_amount' => $totalAmount,
-                'status' => 'pending', 
-                'shipping_address_line_1' => $request->shipping_address_line_1,
-                'city' => $request->city,
-                'postal_code' => $request->postal_code,
+                'status' => 'pending',
+                'customer_name' => $request->customer_name,
+                'customer_phone' => $request->customer_phone,
+                'wilaya' => $request->wilaya,
+                'commune' => $request->commune,
+                'address' => $request->address,
+
             ]);
 
             // 3. Create order items

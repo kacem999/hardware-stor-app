@@ -10,10 +10,11 @@ class Order extends Model
         'user_id',
         'total_amount',
         'status',
-        'shipping_address_line_1',
-        'shipping_address_line_2',
-        'city',
-        'postal_code'
+        'customer_name',
+        'customer_phone',
+        'wilaya',
+        'commune',
+        'address',
     ];
 
     public function user (){
