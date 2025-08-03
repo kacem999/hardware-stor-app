@@ -42,7 +42,11 @@ const ProductCard = ({ product }) => {
                         <p className="text-xl font-bold text-gray-900">
                             <Currency value={product.price} />
                         </p>
-                        <p className="text-sm text-gray-600">In Stock: {product.stock_quantity}</p>
+                        {product.stock_quantity > 0 ? (
+                            <span className="text-sm px-2 py-1 bg-green-100 text-green-800 rounded-md">In Stock</span>
+                        ) : (
+                            <span className="text-sm px-2 py-1 bg-red-100 text-red-800 rounded-md">Out of Stock</span>
+                        )}
                     </div>
                 </div>
             </div>

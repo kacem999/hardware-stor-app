@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import apiClient from "../../api/axios";
 import Modal from "../../components/Modal"; 
+import Currency from "../../components/Currency";
 
 
 const ManageOrdersPage = () => {
@@ -94,8 +95,8 @@ const ManageOrdersPage = () => {
                         {orders.map(order => (
                             <tr key={order.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">#{order.id}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.user.name}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${order.total_amount}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.customer_name || order.user.name}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"><Currency value={order.total_amount} /></td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}>
                                         {order.status}
@@ -120,20 +121,22 @@ const ManageOrdersPage = () => {
             {selectedOrder && (
                 <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title={`Order #${selectedOrder.id} Details`}>
                     <div className="text-sm">
-                        <p><strong>Customer:</strong> {selectedOrder.user.name}</p>
+                        <p><strong>Account:</strong> {selectedOrder.user.name}</p>
                         <p><strong>Status:</strong> <span className="font-semibold uppercase">{selectedOrder.status}</span></p>
-                        <p><strong>Total:</strong> ${selectedOrder.total_amount}</p>
+                        <p><strong>Total:</strong> <Currency value={selectedOrder.total_amount} /></p>
                         <div className="mt-4">
-                            <h4 className="font-semibold">Shipping Address:</h4>
-                            <p>{selectedOrder.shipping_address_line_1}</p>
-                            <p>{selectedOrder.city}, {selectedOrder.postal_code}</p>
+                            <h4 className="font-semibold">Shipping Information:</h4>
+                            <p><strong>Customer:</strong> {selectedOrder.customer_name}</p>
+                            <p><strong>Phone:</strong> {selectedOrder.customer_phone}</p>
+                            <p><strong>Address:</strong> {selectedOrder.address}</p>
+                            <p><strong>Location:</strong> {selectedOrder.commune}, {selectedOrder.wilaya}</p>
                         </div>
                         <div className="mt-4">
                             <h4 className="font-semibold">Items Ordered:</h4>
                             <ul className="list-disc list-inside mt-2 space-y-1">
                                 {selectedOrder.items.map(item => (
                                     <li key={item.id}>
-                                        {item.product.name} - {item.quantity} x ${item.price}
+                                        {item.product.name} - {item.quantity} x <Currency value={item.price} />
                                     </li>
                                 ))}
                             </ul>

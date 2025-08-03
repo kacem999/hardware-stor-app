@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('address')->after('commune');
 
             // Remove the old columns
-            $table->dropColumn(['shipping_address_line_1', 'shipping_address_line_2', 'city']);
+            $table->dropColumn(['shipping_address_line_1', 'shipping_address_line_2', 'city', 'postal_code']);
         });
     }
 
