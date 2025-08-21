@@ -9,8 +9,11 @@ const AdminSidebar = () => {
 
     return (
         <aside className="w-64 bg-white shadow-md">
-            <div className="p-4">
-                <h2 className="text-xl font-bold text-gray-800">Admin Panel</h2>
+            <div className="p-6">
+                <div className="flex flex-col items-center mb-6">
+                    <img src="/Logo.png" alt="Hardware Store Logo" className="h-32 w-auto mb-6" />
+                    <h2 className="text-xl font-bold text-gray-800">Admin Panel</h2>
+                </div>
             </div>
             <nav className="mt-4">
                 <NavLink to="/admin/dashboard" className={({ isActive }) => `${isActive ? activeLink : normalLink} block py-2 px-4 transition duration-200`}>

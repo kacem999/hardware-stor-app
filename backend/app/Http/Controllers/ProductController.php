@@ -10,9 +10,26 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Product::with('category')->get();
+        $query = Product::with('category');
+
+        // Handle the search query 
+        $query->when($request->search, function ($q, $searchTerm) {
+            $q->where(function ($subQuery) use ($searchTerm){
+                $subQuery->where('name', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
+            });
+        });
+
+        // handle the category filter 
+        $query->when($request->category, function ($q, $categoryId) {
+            $q->where('category_id', $categoryId);
+        });
+
+        // Execute the final query
+        return $query->get();
+
     }
 
     public function show(Product $product)

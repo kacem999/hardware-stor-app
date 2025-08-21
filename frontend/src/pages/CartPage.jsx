@@ -52,7 +52,7 @@ const CartPage = () => {
                                         </div>
                                         <div>
                                             <h4 className="text-lg font-semibold text-gray-800">{item.name}</h4>
-                                            <p className="text-sm text-gray-500"><Currency amount={item.price} /></p>
+                                            <p className="text-sm text-gray-500"><Currency value={item.price} /></p>
                                         </div>
                                     </div>
                                     <div className="flex items-center space-x-4">
