@@ -16,19 +16,19 @@ const LanguageSwitcher = () => {
     <div className="language-switcher flex gap-2">
       <button 
         onClick={() => changeLanguage('en')}
-        className={`px-2 py-1 text-sm rounded ${i18n.language === 'en' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        className={`px-2 py-1 text-sm rounded ${i18n.language === 'en' ? 'bg-[#dc6b01] text-white' : 'bg-[#3c3b3b] text-white'}`}
       >
         English
       </button>
       <button 
         onClick={() => changeLanguage('fr')}
-        className={`px-2 py-1 text-sm rounded ${i18n.language === 'fr' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        className={`px-2 py-1 text-sm rounded ${i18n.language === 'fr' ? 'bg-[#dc6b01] text-white' : 'bg-[#3c3b3b] text-white'}`}
       >
         Français
       </button>
       <button 
         onClick={() => changeLanguage('ar')}
-        className={`px-2 py-1 text-sm rounded ${i18n.language === 'ar' ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}
+        className={`px-2 py-1 text-sm rounded ${i18n.language === 'ar' ? 'bg-[#dc6b01] text-white' : 'bg-[#3c3b3b] text-white'}`}
       >
         العربية
       </button>

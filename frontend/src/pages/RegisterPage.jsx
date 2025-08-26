@@ -128,7 +128,7 @@ const RegisterPage = () => {
                         {errors.password_confirmation && <p className="text-red-500 text-sm mt-1">{errors.password_confirmation[0]}</p>}
                     </div>
                     
-                    <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <button type="submit" className="w-full bg-[#dc6b01] text-white py-2 rounded-md hover:bg-[#b55a01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#dc6b01]">
                         Register
                     </button>
                 </form>

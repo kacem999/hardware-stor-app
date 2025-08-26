@@ -81,13 +81,13 @@ const CartPage = () => {
                         {/* Cart Summary */}
                         <div className="p-4 bg-gray-50 rounded-b-lg border-t">
                             <div className="flex justify-end items-center space-x-4">
-                                <span className="text-xl font-medium text-gray-800">Total:</span>
-                                <span className="text-2xl font-bold text-gray-900">
+                                <span className="text-xl font-medium text-[#2b2a2a]">Total:</span>
+                                <span className="text-2xl font-bold text-[#b55a01]">
                                     <Currency value={totalPrice} />
                                 </span>
                             </div>
                             <div className="flex justify-end mt-4">
-                                <Link to="/checkout" className="w-full sm:w-auto bg-blue-600 text-white py-2 px-6 rounded-md text-center hover:bg-blue-700">
+                                <Link to="/checkout" className="w-full sm:w-auto bg-[#dc6b01] text-white py-2 px-6 rounded-md text-center hover:bg-[#b55a01]">
                                     Proceed to Checkout
                                 </Link>
                             </div>

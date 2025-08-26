@@ -22,26 +22,26 @@ const Navbar = () => {
                             <img src="/Logo.png" alt="Hardware Store Logo" className="h-24 w-auto" />
                         </Link>
                         <div className="flex items-center h-16">
-                            <Link to="/products" className="text-gray-500 hover:text-blue-600 text-lg ml-4">{t('navigation.products')}</Link>
-                            {user && <Link to="/dashboard" className="text-gray-500 hover:text-blue-600 text-lg ml-4">{t('navigation.dashboard')}</Link>}
+                            <Link to="/products" className="text-[#2b2a2a] hover:text-[#dc6b01] text-lg ml-4">{t('navigation.products')}</Link>
+                            {user && <Link to="/dashboard" className="text-[#2b2a2a] hover:text-[#dc6b01] text-lg ml-4">{t('navigation.dashboard')}</Link>}
                         </div>
                     </div>
 
                     {/* Right side links */}
                     {/* experience */}
                     <div className="flex items-center space-x-6 h-16">
-                        <Link to="/cart" className="text-gray-500 hover:text-blue-600 text-lg">
+                        <Link to="/cart" className="text-[#2b2a2a] hover:text-[#dc6b01] text-lg">
                             {t('navigation.cart')} ({totalItemsInCart})
                         </Link>
                         {user ? (
                             <>
-                                <span className="text-gray-700 text-lg">Hello, {user.name}</span>
-                                <button onClick={logout} className="text-gray-500 hover:text-red-600 text-lg font-medium">{t('navigation.logout')}</button>
+                                <span className="text-[#2b2a2a] text-lg">Hello, {user.name}</span>
+                                <button onClick={logout} className="text-[#2b2a2a] hover:text-red-600 text-lg font-medium">{t('navigation.logout')}</button>
                             </>
                         ) : (
                             <>
-                                <Link to="/login" className="text-gray-500 hover:text-blue-600 text-lg font-medium">{t('navigation.login')}</Link>
-                                <Link to="/register" className="text-gray-500 hover:text-blue-600 text-lg font-medium">{t('navigation.register')}</Link>
+                                <Link to="/login" className="text-[#2b2a2a] hover:text-[#dc6b01] text-lg font-medium">{t('navigation.login')}</Link>
+                                <Link to="/register" className="text-[#2b2a2a] hover:text-[#dc6b01] text-lg font-medium">{t('navigation.register')}</Link>
                             </>
                         )}
                         

@@ -157,7 +157,7 @@ const CheckoutPage = () => {
                         <button 
                             onClick={handlePlaceOrder} 
                             disabled={isPlacingOrder}
-                            className="w-full mt-6 bg-blue-600 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-blue-400 disabled:cursor-not-allowed"
+                            className="w-full mt-6 bg-[#dc6b01] text-white py-3 rounded-md text-lg font-semibold hover:bg-[#b55a01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#dc6b01] disabled:bg-[#ee8422] disabled:cursor-not-allowed"
                         >
                             {isPlacingOrder ? 'Placing Order...' : 'Place Order'}
                         </button>

@@ -62,10 +62,10 @@ const ProductDetailPage = () => {
 
                     {/* Details Column */}
                     <div className="flex flex-col justify-center">
-                        <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
+                        <p className="text-sm font-semibold uppercase tracking-wide text-[#dc6b01]">
                             {product.category.name}
                         </p>
-                        <h1 className="text-4xl font-extrabold text-gray-900 mt-2">
+                        <h1 className="text-4xl font-extrabold text-[#2b2a2a] mt-2">
                             {product.name}
                         </h1>
                         <p className="text-3xl text-gray-900 mt-4">
@@ -85,7 +85,7 @@ const ProductDetailPage = () => {
                                     addToCart(product);
                                     alert(`${product.name} added to cart!`);
                                 }}
-                                className="w-full bg-blue-600 text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                                className="w-full bg-[#dc6b01] text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-[#b55a01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#dc6b01]"
                             >
                                 Add to Cart
                             </button>

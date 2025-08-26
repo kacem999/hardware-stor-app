@@ -34,12 +34,12 @@ const ProductCard = ({ product }) => {
                     />
                 </div>
                 <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-800 truncate group-hover:text-blue-600">
+                    <h3 className="text-lg font-semibold text-[#2b2a2a] truncate group-hover:text-[#dc6b01]">
                         {product.name}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-2">{product.category.name}</p>
+                    <p className="text-sm text-[#3c3b3b] mb-2">{product.category.name}</p>
                     <div className="flex items-center justify-between">
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-xl font-bold text-[#b55a01]">
                             <Currency value={product.price} />
                         </p>
                         {product.stock_quantity > 0 ? (
