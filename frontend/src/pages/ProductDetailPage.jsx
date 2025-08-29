@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import apiClient from "../api/axios"; // Ensure this path is correct based on your project structure
 import { useCart } from "../context/CartContext";
 import Currency from "../components/Currency"; // Import Currency component for price formatting
+import ProductCard from "../components/ProductCard";
+
 
 const ProductDetailPage = () => {
 
@@ -11,22 +13,43 @@ const ProductDetailPage = () => {
     const [product , setProduct] = useState(null);
     const [loading , setLoading] = useState(true);
     const [error, setError] = useState(null); 
+    const [addedToCart, setAddedToCart] = useState(false);
+    const [relatedProducts, setRelatedProducts] = useState([]);
 
     // we will add the data fetching logic here 
     useEffect(() => {
-        const fetchProduct = async () => {
+        const fetchProductAndRelated = async () => {
+            setLoading(true);
+            setError(null);
             try {
-                setLoading(true);
-                const response = await apiClient.get(`/products/${id}`);
-                setProduct(response.data);
+                
+                const [productResponse, relatedResponse] = await Promise.all([
+                    apiClient.get(`/products/${id}`),
+                    apiClient.get(`/products/${id}/related`)
+                ]);
+                setProduct(productResponse.data);
+                setRelatedProducts(relatedResponse.data);
             } catch (error) {
-                setError(error);
+                setError('Failed to fetch product details.');
+                console.error(error);
             } finally {
                 setLoading(false);
             }
         };
-        fetchProduct();
+        fetchProductAndRelated();
     }, [id]); // Best Practice: Re-run effect if the ID changes 
+
+    const handleAddToCart = () => {
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: 1, // Always add 1 quantity, users can modify in cart
+            image: product.image
+        });
+        setAddedToCart(true);
+        setTimeout(() => setAddedToCart(false), 3000); // Hide message after 3 seconds
+    };
 
     if (loading) return <div className="text-center p-8">Loading...</div>;
     if (error) return <div className="text-center p-8 text-red-500">{error}</div>;
@@ -51,47 +74,73 @@ const ProductDetailPage = () => {
     }
 
     return (
-        <div className="bg-white">
-            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                    {/* Image Column */}
-                    <div className="flex items-center justify-center bg-gray-100 rounded-lg p-4">
-                        {/* Product image with proper sizing for detail view */}
-                        <img src={imageUrl} alt={product.name} className="max-h-96 object-contain" />
-                    </div>
 
-                    {/* Details Column */}
-                    <div className="flex flex-col justify-center">
-                        <p className="text-sm font-semibold uppercase tracking-wide text-[#dc6b01]">
-                            {product.category.name}
-                        </p>
-                        <h1 className="text-4xl font-extrabold text-[#2b2a2a] mt-2">
-                            {product.name}
-                        </h1>
-                        <p className="text-3xl text-gray-900 mt-4">
-                            <Currency value={product.price} />
-                        </p>
+        <div className="bg-slate-50">
+            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                {/* Main Product Details Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 bg-white p-8 rounded-lg shadow-sm">
+                    {/* Left column - Product Image */}
+                    <div className="flex justify-center items-center bg-white p-4 rounded-lg">
+                        <div className="w-full max-w-md h-96 flex items-center justify-center">
+                            <img 
+                                src={imageUrl} 
+                                alt={product.name} 
+                                className="max-h-full max-w-full object-contain"
+                                onError={(e) => {e.target.src = 'https://placehold.co/600x400'}}
+                            />
+                        </div>
+                    </div>
+                    
+                    {/* Right column - Product Details */}
+                    <div>
+                        <h1 className="text-3xl font-bold text-[#2b2a2a] mb-2">{product.name}</h1>
+                        <Link to={`/products?category=${product.category_id}`} className="text-sm text-[#dc6b01] mb-4 inline-block">
+                            {product.category?.name || 'Uncategorized'}
+                        </Link>
                         
                         <div className="mt-6">
-                            <h3 className="text-lg font-medium text-gray-900">Description</h3>
-                            <p className="text-base text-gray-600 mt-2">
-                                {product.description || 'No description available.'}
+                            <h2 className="text-2xl font-bold text-[#dc6b01]">
+                                <Currency value={product.price} />
+                            </h2>
+                            <p className={`mt-1 text-sm ${product.stock_quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                {product.stock_quantity > 0 ? 'In Stock' : 'Out of Stock'}
                             </p>
                         </div>
-
-                        <div className="mt-8">
-                            <button 
-                                onClick={() => {
-                                    addToCart(product);
-                                    alert(`${product.name} added to cart!`);
-                                }}
-                                className="w-full bg-[#dc6b01] text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-[#b55a01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#dc6b01]"
-                            >
-                                Add to Cart
-                            </button>
+                        
+                        <div className="mt-6">
+                            <h3 className="text-lg font-semibold text-[#2b2a2a]">Description</h3>
+                            <p className="mt-2 text-gray-600">{product.description}</p>
                         </div>
+                        
+                        {product.stock_quantity > 0 && (
+                            <div className="mt-8">
+                                <button
+                                    onClick={handleAddToCart}
+                                    className="w-full bg-[#dc6b01] text-white px-6 py-3 rounded-md font-medium hover:bg-[#b55a01] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#dc6b01]"
+                                >
+                                    Add to Cart
+                                </button>
+                                {addedToCart && (
+                                    <div className="mt-3 text-sm text-green-600">
+                                        Product added to cart! <Link to="/cart" className="underline font-medium">View cart</Link>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
+
+                {/* Related Products Section */}
+                {relatedProducts.length > 0 && (
+                    <div className="mt-16">
+                        <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Products</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                            {relatedProducts.map(related => (
+                                <ProductCard key={related.id} product={related} />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

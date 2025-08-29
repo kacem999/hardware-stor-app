@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
 
+    public function related(Product $product)
+    {
+        return Product::with('category')
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->inRandomOrder()
+            ->limit(4) // limits to 4 related products
+            ->get();
+    }
+
     public function index(Request $request)
     {
         $query = Product::with('category');

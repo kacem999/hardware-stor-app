@@ -15,6 +15,7 @@ Route::post('/login',[AuthController::class, 'login']);
 Route::apiResource('categories',CategoryController::class);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/products/{product}/related', [ProductController::class, 'related']);
 
 // Apply web middleware to Google OAuth routes to enable session support
 Route::middleware(['web'])->group(function () {
